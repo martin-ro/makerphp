@@ -2,14 +2,16 @@
 
 namespace App\Services;
 
-use Filament\Forms\Components\Field;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\BasePage;
 use Filament\Panel;
-use Filament\Schemas\Components\Component;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Platform;
 use Filament\Tables\Table;
@@ -46,8 +48,14 @@ class PanelConfigurationService
 
                 // Actions on right side
                 BasePage::alignFormActionsEnd();
+
+                // Set slide-over as default for actions
+                Action::configureUsing(fn (Action $action): Action => $action->slideOver());
+                CreateAction::configureUsing(fn (Action $action): Action => $action->slideOver());
+                EditAction::configureUsing(fn (Action $action): Action => $action->slideOver());
+                DeleteAction::configureUsing(fn (Action $action): Action => $action->slideOver());
             })
-            ->globalSearchFieldSuffix(fn(): ?string => match (Platform::detect()) {
+            ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
                 Platform::Windows, Platform::Linux => 'CTRL + K',
                 Platform::Mac => '⌘ + K',
                 default => null,
