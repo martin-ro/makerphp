@@ -4,12 +4,10 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
 
 jobs:
   ci:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
 
     services:
@@ -122,11 +120,3 @@ jobs:
           name: browser-screenshots
           path: |
             tests/Browser/Screenshots
-
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Trigger Laravel Forge Deployment
-        run: curl -s "${{ secrets.LARAVEL_FORGE_DEPLOY_HOOK }}"
