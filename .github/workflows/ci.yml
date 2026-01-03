@@ -1,12 +1,12 @@
 name: tests
 
 on:
-  push:
-    branches-ignore:
-      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   ci:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
 
     services:
