@@ -4,15 +4,14 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
       - main
-      - develop
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
 
     services:
       mysql:
@@ -126,9 +125,8 @@ jobs:
             tests/Browser/Screenshots
 
   deploy:
-    needs: ci
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Trigger Laravel Forge Deployment
