@@ -11,7 +11,7 @@ jobs:
           - ubuntu-latest
         php-version:
           - '8.4'
-        shard: [1, 2, 3]
+        shard: [ 1, 2, 3 ]
     name: Tests for All Commits (Shard ${{ matrix.shard }}/3)
     services:
       mysql:
