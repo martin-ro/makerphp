@@ -1,8 +1,6 @@
 name: tests
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+on: [ pull_request ]
 
 jobs:
   ci:
